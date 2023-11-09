@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #161313;
+            border-radius: 5px;
+            background-color: #ebe8e8;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #4c9baf;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        <p>
+            <label for="tempInput">Enter Temperature:</label>
+            <input type="text" id="tempInput" placeholder="0">
+        </p>
+        <p>
+            <label for="scaleFrom">From:</label>
+            <select id="scaleFrom">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </p>
+        <p>
+            <label for="scaleTo">To:</label>
+            <select id="scaleTo">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </p>
+        <button onclick="convertTemperature()">Convert</button>
+        <p id="result">Result: --</p>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            var inputTemp = parseFloat(document.getElementById("tempInput").value);
+            var fromScale = document.getElementById("scaleFrom").value;
+            var toScale = document.getElementById("scaleTo").value;
+
+            if (isNaN(inputTemp)) {
+                document.getElementById("result").textContent = "Invalid input";
+                return;
+            }
+
+            var result = 0;
+
+            if (fromScale === "celsius") {
+                if (toScale === "fahrenheit") {
+                    result = (inputTemp * 9/5) + 32;
+                } else if (toScale === "kelvin") {
+                    result = inputTemp + 273.15;
+                }
+            } else if (fromScale === "fahrenheit") {
+                if (toScale === "celsius") {
+                    result = (inputTemp - 32) * 5/9;
+                } else if (toScale === "kelvin") {
+                    result = ((inputTemp - 32) * 5/9) + 273.15;
+                }
+            } else if (fromScale === "kelvin") {
+                if (toScale === "celsius") {
+                    result = inputTemp - 273.15;
+                } else if (toScale === "fahrenheit") {
+                    result = ((inputTemp - 273.15) * 9/5) + 32;
+                }
+            }
+
+            document.getElementById("result").textContent = "Result: " + result.toFixed(2) + " " + toScale;
+        }
+    </script>
+</body>
+</html>
